@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+
 app.set("view engine","ejs");
 
 app.get('/', function(req, res){
@@ -17,6 +19,6 @@ app.get('/cities', function(req,res){
     res.render('city.ejs');
 })
 
-app.listen(process.env.PORT, process.env.IP, function(){
-    console.log('Blog server is running');
+app.listen(PORT, process.env.IP, function(){
+    console.log('Blog server is running', PORT);
 });
