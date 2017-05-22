@@ -1,1 +1,25 @@
-<h1>Welcome to City</h1>
+<% include partials/header %>
+
+<div class="container">
+    <div class="jumbotron">
+    <h1>Welcome to City</h1>
+    <p>visit beautiful cities on earth</p>
+    <p>
+        <a href="/cities/new" class="btn btn-primary btn-large">Add New City</a>
+    </p>
+    </div>
+<div class="row text-center" style="display:flex;flex-wrap:wrap;">
+    <% cities.forEach(function(city){%>
+    <div class="col-md-3 col-sm-6">
+        <div class="thumbnail">
+            <img src="<%=city.image%>">
+            <div class="caption">
+                <h4><%=city.name%></h4>
+            </div>
+        </div>
+    </div>
+<%});%>
+</div>
+
+</div>
+<% include partials/footer %>

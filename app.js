@@ -11,13 +11,26 @@ app.get('/', function(req, res){
 
 app.get('/cities', function(req,res){
     var cities = [
-        {name:'Tokyo',image:'https://en.wikipedia.org/wiki/Tokyo#/media/File:TokyoMetropolitanGovernmentOffice.jpg'},
-        {name:'Osaka',image:'https://en.wikipedia.org/wiki/Osaka#/media/File:Osaka_Castle_02bs3200.jpg'},
-        {name:'Nagoya',image:'https://en.wikipedia.org/wiki/Port_of_Nagoya#/media/File:Nagoya_Port_02.jpg'},
-        {name:'Kyoto',image:'https://en.wikipedia.org/wiki/Kyoto#/media/File:Atago07.JPG'}
+        {name:'Tokyo',image:'http://www.japan-guide.com/thumb/XYZeXYZe3009_375.jpg'},
+        {name:'Osaka',image:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Central_Osaka.jpg/600px-Central_Osaka.jpg'},
+        {name:'Nagoya',image:'http://www.japantimes.co.jp/wp-content/uploads/2016/10/p18-brasor-nagoya-a-20161009.jpg'},
+        {name:'Kyoto',image:'http://www.fourseasons.com/content/dam/fourseasons/images/web/KYO/KYO_041_1280x486.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg'},
+        {name:'Tokyo',image:'http://www.japan-guide.com/thumb/XYZeXYZe3009_375.jpg'},
+        {name:'Osaka',image:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Central_Osaka.jpg/600px-Central_Osaka.jpg'},
+        {name:'Nagoya',image:'http://www.japantimes.co.jp/wp-content/uploads/2016/10/p18-brasor-nagoya-a-20161009.jpg'},
+        {name:'Kyoto',image:'http://www.fourseasons.com/content/dam/fourseasons/images/web/KYO/KYO_041_1280x486.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg'}
         ];
-    res.render('city.ejs');
+    res.render('city', {cities:cities});
 })
+
+app.post('/cities', function(req,res){
+    res.send('posting cities')
+});
+
+app.get('/cities/new', function(req,res){
+    console.log('new');
+   res.render('new'); 
+});
 
 app.listen(PORT, process.env.IP, function(){
     console.log('Blog server is running', PORT);
