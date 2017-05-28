@@ -1,16 +1,21 @@
 const express = require('express');
 const app = express();
-
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/tempBlog');
 const PORT = process.env.PORT || 3000;
 
+app.use(bodyParser.urlencoded({extended:false}));
 app.set("view engine","ejs");
 
-app.get('/', function(req, res){
-    res.render("landing");
-})
+const citySchema = new mongoose.Schema({
+    name: String,
+    image: String
+});
 
-app.get('/cities', function(req,res){
-    var cities = [
+const City = mongoose.model('City',citySchema);
+
+ /*  var cities = [
         {name:'Tokyo',image:'http://www.japan-guide.com/thumb/XYZeXYZe3009_375.jpg'},
         {name:'Osaka',image:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Central_Osaka.jpg/600px-Central_Osaka.jpg'},
         {name:'Nagoya',image:'http://www.japantimes.co.jp/wp-content/uploads/2016/10/p18-brasor-nagoya-a-20161009.jpg'},
@@ -20,11 +25,40 @@ app.get('/cities', function(req,res){
         {name:'Nagoya',image:'http://www.japantimes.co.jp/wp-content/uploads/2016/10/p18-brasor-nagoya-a-20161009.jpg'},
         {name:'Kyoto',image:'http://www.fourseasons.com/content/dam/fourseasons/images/web/KYO/KYO_041_1280x486.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg'}
         ];
-    res.render('city', {cities:cities});
+*/
+
+app.get('/', function(req, res){
+    res.render("landing");
+})
+
+app.get('/cities', function(req,res){
+    City.find({}, function(err,cities){
+       if(err){
+           console.log(err)
+       } else{
+           res.render('city', {cities:cities});
+       }
+    });
 })
 
 app.post('/cities', function(req,res){
-    res.send('posting cities')
+    var name = req.body.city;
+    var image = req.body.image;
+    var addCity= {name:name,image:image}
+    console.log(addCity);
+    //cities.push(addCity)
+   City.create(
+       {
+           name:name,
+           image:image
+       }, function(err,data){
+    if(err){
+        console.log(err)
+    }else{
+        console.log(data)
+    }
+});
+    res.redirect('/cities');
 });
 
 app.get('/cities/new', function(req,res){
